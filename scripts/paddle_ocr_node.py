@@ -3,7 +3,7 @@ import rospy
 import cv2
 import numpy as np
 from sensor_msgs.msg import Image
-from std_msgs.msg import String
+from std_msgs.msg import Bool
 from paddle_ocr_ros.msg import OCRResult, OCRItem
 from geometry_msgs.msg import Point
 from cv_bridge import CvBridge
@@ -47,18 +47,16 @@ class PaddleOCRNode:
         # 初始化ROS组件
         self.bridge = CvBridge()
         self.image_sub = rospy.Subscriber(image_topic, Image, self.image_callback)
-        self.ctrl_sub = rospy.Subscriber(ctrl_topic, String, self.ctrl_callback)
+        self.ctrl_sub = rospy.Subscriber(ctrl_topic, Bool, self.ctrl_callback)
         self.ocr_pub = rospy.Publisher(pub_topic, OCRResult, queue_size=10)
         self.ctrl_flag = False
         rospy.loginfo("PaddleOCR节点已启动，等待图像输入...")
         
     def ctrl_callback(self, msg):
-        if msg.data.lower() == "true":
-            self.ctrl_flag = True
-        else:
-            self.ctrl_flag = False
-            if self.visualize:
-                cv2.destroyAllWindows()  # 停止可视化时关闭所有窗口
+        self.ctrl_flag = msg.data
+        if self.visualize and not self.ctrl_flag:
+            cv2.destroyAllWindows()  # 停止可视化时关闭所有窗口
+            
     
     def image_callback(self, msg):
         if not self.ctrl_flag:

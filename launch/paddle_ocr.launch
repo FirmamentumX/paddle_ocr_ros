@@ -6,7 +6,7 @@
         <param name="rec_model_dir" value="$(find paddle_ocr_ros)/models/en_PP-OCRv3_rec_infer"/>
         
         <!-- 输入图像话题 -->
-        <param name="image_topic" value="/usb_cam/image_raw"/>
+        <param name="image_topic" value="/camera/image_raw"/>
         <!-- 发布识别信息话题 -->
         <param name="pub_topic" value="/ocr_results"/>
 
@@ -15,6 +15,6 @@
         <!-- 是否执行可视化 -->
         <param name="visualize" value= "True"/>
     </node>
-    <!-- 控制话题模拟 -->
-    <node name="control_publisher" pkg="rostopic" type="rostopic" args="pub /ocr_ctrl std_msgs/String true" output="screen"/>
+    <!-- 控制话题模拟，每0.1秒发布一次 -->
+    <node name="control_publisher" pkg="rostopic" type="rostopic" args="pub -r 10 /ocr_ctrl std_msgs/Bool 'data: true'" output="screen"/>
 </launch>
