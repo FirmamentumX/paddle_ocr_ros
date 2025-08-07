@@ -15,4 +15,6 @@
         <!-- 是否执行可视化 -->
         <param name="visualize" value= "True"/>
     </node>
+    <!-- 控制话题模拟 -->
+    <node name="control_publisher" pkg="rostopic" type="rostopic" args="pub /ocr_ctrl std_msgs/String true" output="screen"/>
 </launch>
