@@ -41,7 +41,11 @@ class PaddleOCRNode:
             lang='en',
             det_model_dir=det_model,  # 替代 det_model_dir text_detection_model_dir
             rec_model_dir=rec_model,  # 替代 rec_model_dir text_recognition_model_dir
-            enable_mkldnn=False  # 显式禁用 MKLDNN
+            enable_mkldnn=False,  # 显式禁用 MKLDNN
+            use_gpu=True,
+            rec_algorithm='SVTR_LCNet',
+            det_db_box_thresh=0.5,
+            drop_score=0.3
         )
         
         # 初始化ROS组件

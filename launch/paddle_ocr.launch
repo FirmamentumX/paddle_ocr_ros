@@ -13,8 +13,10 @@
         <param name="ctrl_topic" value="/ocr_ctrl"/>
 
         <!-- 是否执行可视化 -->
-        <param name="visualize" value= "True"/>
+        <param name="visualize" value= "true"/>
+        <!-- 使用v4时额外设置dict -->
+        <param name="rec_char_dict_path" value="$(find paddle_ocr_ros)/dicts/en_dict.txt"/>
     </node>
     <!-- 控制话题模拟，每0.1秒发布一次 -->
-    <node name="control_publisher" pkg="rostopic" type="rostopic" args="pub -r 10 /ocr_ctrl std_msgs/Bool 'data: true'" output="screen"/>
+    <node name="control_publisher" pkg="rostopic" type="rostopic" args="pub -r 5 /ocr_ctrl std_msgs/Bool 'data: true'" output="screen"/>
 </launch>
